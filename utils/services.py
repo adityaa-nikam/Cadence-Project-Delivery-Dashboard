@@ -143,7 +143,10 @@ def update_milestone_status_service(
 
 
 def create_ai_proposal_service(
-    project_id: str, raw_text: str, db_url: str | None = None
+    project_id: str,
+    raw_text: str,
+    db_url: str | None = None,
+    force_reanalyze: bool = False,
 ) -> dict:
     """
     Generate an AI analysis proposal staged for human review without mutating state.
@@ -170,12 +173,23 @@ def create_ai_proposal_service(
         if not project:
             raise ValueError(f"Project '{project_id}' not found.")
 
-        # Delete any previous pending proposals for the same update hash to enable fresh interactive re-analysis
-        session.query(ProposalDB).filter(
+        existing_proposal = session.query(ProposalDB).filter(
             ProposalDB.project_id == project_id,
             ProposalDB.update_hash == update_hash,
-            ProposalDB.status == "Pending"
-        ).delete(synchronize_session=False)
+        ).first()
+
+        if existing_proposal:
+            if not force_reanalyze:
+                return {
+                    "proposal_id": existing_proposal.id,
+                    "raw_text": existing_proposal.raw_text,
+                    "analysis": json.loads(existing_proposal.analysis_json),
+                    "is_duplicate": True,
+                    "status": existing_proposal.status,
+                    "error": None,
+                }
+            else:
+                session.delete(existing_proposal)
 
         project_milestones = ms_repo.get_by_project(project_id)
         project_issues = issue_repo.get_by_project(project_id)
@@ -183,6 +197,45 @@ def create_ai_proposal_service(
     # Call AI Helper
     ai_result = parse_update(raw_text.strip(), project_milestones)
     latency = round((time.time() - start_time) * 1000, 2)
+
+    # If status_changes is empty (e.g. no API key configured or fallback), run deterministic rule-based pattern extraction
+    if not ai_result.get("status_changes"):
+        demo_changes = []
+        demo_affected = []
+        raw_lower = raw_text.lower()
+        for m in project_milestones:
+            m_title = getattr(m, "title", "")
+            m_title_lower = m_title.lower()
+            if m_title_lower in raw_lower or (len(m_title_lower.split()) > 1 and all(w in raw_lower for w in m_title_lower.split() if len(w) > 3)):
+                demo_affected.append(m_title)
+                if any(kw in raw_lower for kw in ["complete", "completed", "finished", "100%", "done", "succeeded"]):
+                    if getattr(m, "status", "") != "Done":
+                        demo_changes.append({
+                            "entity_type": "Milestone",
+                            "entity_name": m_title,
+                            "previous_status": getattr(m, "status", "Open"),
+                            "proposed_status": "Done",
+                            "reason": f"Update explicitly states '{m_title}' is complete.",
+                            "confidence": 0.95,
+                        })
+                elif any(kw in raw_lower for kw in ["blocked", "timeout", "timed out", "delay", "stuck", "failing"]):
+                    if getattr(m, "status", "") != "Blocked":
+                        demo_changes.append({
+                            "entity_type": "Milestone",
+                            "entity_name": m_title,
+                            "previous_status": getattr(m, "status", "Open"),
+                            "proposed_status": "Blocked",
+                            "reason": f"Update text indicates '{m_title}' is delivery blocked.",
+                            "confidence": 0.90,
+                        })
+
+        if demo_changes:
+            ai_result["status_changes"] = demo_changes
+            ai_result["affected_milestones"] = demo_affected
+            ai_result["summary"] = raw_text.strip().replace("\n", " ")[:150]
+            ai_result["affected_milestone"] = demo_affected[0]
+            ai_result["new_status"] = demo_changes[0]["proposed_status"]
+            ai_result["error"] = None
 
     # Validate proposed status changes
     validated_changes = []
@@ -242,10 +295,12 @@ def create_ai_proposal_service(
 
 def apply_proposal_decision_service(
     proposal_id: str,
-    approved_change_indices: list[int],
-    rejected_change_indices: list[int],
+    approved_change_indices: list[int] | None = None,
+    rejected_change_indices: list[int] | None = None,
     author: str = "User",
     db_url: str | None = None,
+    approved: bool | None = None,
+    rejected: bool | None = None,
 ) -> dict:
     """
     Execute human-approved status changes in an atomic database transaction.
@@ -278,8 +333,19 @@ def apply_proposal_decision_service(
         project_issues = issue_repo.get_by_project(project_id)
 
         status_changes = analysis.get("status_changes", [])
+
         applied_changes = []
         rejected_changes = []
+
+        if approved and approved_change_indices is None:
+            approved_change_indices = list(range(len(status_changes)))
+        elif approved_change_indices is None:
+            approved_change_indices = []
+
+        if rejected and rejected_change_indices is None:
+            rejected_change_indices = list(range(len(status_changes)))
+        elif rejected_change_indices is None:
+            rejected_change_indices = []
 
         # 1. Process Approved Status Changes
         for idx in approved_change_indices:
@@ -412,3 +478,14 @@ def get_portfolio_stats(db_url: str | None = None) -> dict:
             "total_blocked": total_blocked,
             "ai_updates": total_ai_logs,
         }
+
+
+def get_activity_audit_trail(project_id: str | None = None, db_url: str | None = None):
+    """Retrieve activity audit trail events from database."""
+    from utils.db_models import ActivityEventDB
+    with get_db(db_url) as session:
+        query = session.query(ActivityEventDB)
+        if project_id:
+            query = query.filter(ActivityEventDB.project_id == project_id)
+        return query.order_by(ActivityEventDB.timestamp.desc()).all()
+

@@ -22,6 +22,7 @@ load_dotenv()
 
 from mock_data import MILESTONES, PROJECTS, UPDATES
 from pages.detail import render_detail
+from pages.gmail_ingestion import render_gmail_ingestion_page
 from pages.overview import render_overview
 from pages.observability import render_observability_page
 from utils.state import init_state
@@ -78,6 +79,12 @@ with st.sidebar:
     if st.button("🏠 Portfolio Overview", use_container_width=True, type="primary" if is_portfolio else "secondary"):
         st.session_state["selected_project_id"] = None
         st.session_state["active_tab"] = "portfolio"
+        st.rerun()
+
+    is_gmail = st.session_state["active_tab"] == "gmail_ingestion"
+    if st.button("📧 Gmail Ingestion", use_container_width=True, type="primary" if is_gmail else "secondary"):
+        st.session_state["selected_project_id"] = None
+        st.session_state["active_tab"] = "gmail_ingestion"
         st.rerun()
 
     is_obs = st.session_state["active_tab"] == "observability"
@@ -147,6 +154,8 @@ with st.sidebar:
 
 if st.session_state.get("active_tab") == "observability":
     render_observability_page()
+elif st.session_state.get("active_tab") == "gmail_ingestion":
+    render_gmail_ingestion_page()
 elif st.session_state.get("selected_project_id") is None:
     render_overview()
 else:
