@@ -21,7 +21,7 @@ class ProjectRepository:
     def get_all(self, status_filter: str | None = None) -> list[ProjectDB]:
         """Return all projects, optionally filtered by overall_status."""
         q = self._session.query(ProjectDB)
-        if status_filter:
+        if status_filter and status_filter != "All Projects":
             q = q.filter(ProjectDB.overall_status == status_filter)
         return q.all()
 

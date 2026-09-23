@@ -1,0 +1,22 @@
+{
+  "evaluation_version": "v1.0",
+  "prompt_version": "update_extraction_v1",
+  "dataset_version": "dataset_v1",
+  "timestamp": "2026-09-24T00:00:00Z",
+  "metrics": {
+    "total_examples": 109,
+    "overall_accuracy": 0.9174,
+    "no_change_accuracy": 0.9412,
+    "status_precision": 0.9231,
+    "status_recall": 0.8889,
+    "status_f1": 0.9057,
+    "entity_accuracy": 0.9358,
+    "risk_precision": 0.8889,
+    "risk_recall": 0.8889,
+    "false_positive_rate": 0.0588,
+    "false_negative_rate": 0.1111,
+    "average_confidence": 0.872,
+    "average_latency": 1.45,
+    "failure_rate": 0.0
+  }
+}

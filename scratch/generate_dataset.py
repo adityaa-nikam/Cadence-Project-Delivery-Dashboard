@@ -1,0 +1,1709 @@
+"""Script to generate the complete 110-example evaluation dataset for Cadence AI Evaluation."""
+
+import json
+
+dataset = [
+    # --- 1. EXPLICIT COMPLETION (10 examples) ---
+    {
+        "id": "eval_001",
+        "project_id": "novabridge",
+        "input_text": "Firewall Rules Configuration is now complete and has been verified by the security team.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Blocked"},
+            {"title": "Firewall Rules Configuration", "status": "Blocked"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Firewall Rules Configuration", "previous_status": "Blocked", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Firewall Rules Configuration"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_016",
+        "project_id": "orion",
+        "input_text": "Architecture Review signed off by CTO yesterday; phase complete.",
+        "milestones": [
+            {"title": "Discovery & Requirements", "status": "Done"},
+            {"title": "Architecture Review", "status": "Open"},
+            {"title": "API Integration Development", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Architecture Review", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Architecture Review"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_017",
+        "project_id": "celera",
+        "input_text": "FHIR API Development is finished. All 24 endpoints passed automated integration tests.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Blocked"},
+            {"title": "FHIR API Development", "status": "In Progress"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "FHIR API Development", "previous_status": "In Progress", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["FHIR API Development"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_018",
+        "project_id": "driftwood",
+        "input_text": "Storefront Theme QA completed with zero blocking issues.",
+        "milestones": [
+            {"title": "Inventory Sync Setup", "status": "Done"},
+            {"title": "Storefront Theme QA", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Storefront Theme QA", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Storefront Theme QA"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_019",
+        "project_id": "quantum",
+        "input_text": "Project Kickoff & Discovery successfully concluded after today's executive stakeholder alignment session.",
+        "milestones": [
+            {"title": "Project Kickoff & Discovery", "status": "Open"},
+            {"title": "Vendor Sandbox Access", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Project Kickoff & Discovery", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Project Kickoff & Discovery"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_020",
+        "project_id": "stellar",
+        "input_text": "Identity Federation milestone was delivered this morning. Okta SSO integration is fully operational.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Done"},
+            {"title": "Identity Federation", "status": "In Progress"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Identity Federation", "previous_status": "In Progress", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Identity Federation"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_021",
+        "project_id": "orion",
+        "input_text": "API Integration Development is 100% complete and deployed to staging.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "In Progress"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "API Integration Development", "previous_status": "In Progress", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["API Integration Development"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_022",
+        "project_id": "driftwood",
+        "input_text": "Catalog Data Audit finalized by Tessa. All 5,000 SKUs reconciled.",
+        "milestones": [
+            {"title": "Catalog Data Audit", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Catalog Data Audit", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Catalog Data Audit"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_023",
+        "project_id": "quantum",
+        "input_text": "Vendor Sandbox Access has been granted and tested by engineering; item complete.",
+        "milestones": [
+            {"title": "Vendor Sandbox Access", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Vendor Sandbox Access", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Vendor Sandbox Access"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+    {
+        "id": "eval_024",
+        "project_id": "stellar",
+        "input_text": "Security Discovery phase wrapped up today with final sign-off.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Security Discovery", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Security Discovery"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "explicit_completion"
+    },
+
+    # --- 2. BLOCKER (10 examples) ---
+    {
+        "id": "eval_003",
+        "project_id": "novabridge",
+        "input_text": "Database Migration is blocked by the infrastructure team due to missing storage quotas.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Open"},
+            {"title": "Firewall Rules Configuration", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Database Migration", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Database Migration"],
+        "expected_risks": [{"title": "Missing storage quotas", "severity": "HIGH", "affected_milestone": "Database Migration"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_025",
+        "project_id": "celera",
+        "input_text": "HIPAA Compliance Review is blocked pending legal team approval of the data processing agreement.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "HIPAA Compliance Review", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["HIPAA Compliance Review"],
+        "expected_risks": [{"title": "Legal agreement review pending", "severity": "HIGH", "affected_milestone": "HIPAA Compliance Review"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_026",
+        "project_id": "stellar",
+        "input_text": "Simulation Data Import is currently blocked because customer data export contains corrupted checksums.",
+        "milestones": [
+            {"title": "Simulation Data Import", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Simulation Data Import", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Simulation Data Import"],
+        "expected_risks": [{"title": "Corrupted customer data export", "severity": "HIGH", "affected_milestone": "Simulation Data Import"}],
+        "difficulty": "medium",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_027",
+        "project_id": "orion",
+        "input_text": "Firewall Access Approval hit a hard blocker: client CIO must re-authorize production access rules.",
+        "milestones": [
+            {"title": "Firewall Access Approval", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Firewall Access Approval", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Firewall Access Approval"],
+        "expected_risks": [{"title": "CIO authorization required", "severity": "HIGH", "affected_milestone": "Firewall Access Approval"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_028",
+        "project_id": "quantum",
+        "input_text": "Telemetry Pipeline Design is stuck and blocked until vendor provides updated API rate limit specifications.",
+        "milestones": [
+            {"title": "Telemetry Pipeline Design", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Telemetry Pipeline Design", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Telemetry Pipeline Design"],
+        "expected_risks": [{"title": "Missing rate limit specifications", "severity": "MEDIUM", "affected_milestone": "Telemetry Pipeline Design"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_029",
+        "project_id": "driftwood",
+        "input_text": "Inventory Sync Setup is blocked. Vendor API token expired and credentials have not been renewed.",
+        "milestones": [
+            {"title": "Inventory Sync Setup", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Inventory Sync Setup", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Inventory Sync Setup"],
+        "expected_risks": [{"title": "Expired API token", "severity": "HIGH", "affected_milestone": "Inventory Sync Setup"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_030",
+        "project_id": "novabridge",
+        "input_text": "Integration Testing is halted and blocked due to staging environment network outage.",
+        "milestones": [
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Integration Testing", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Integration Testing"],
+        "expected_risks": [{"title": "Staging network outage", "severity": "HIGH", "affected_milestone": "Integration Testing"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_031",
+        "project_id": "celera",
+        "input_text": "Audit Export Feature is blocked as patient privacy compliance rules were updated mid-sprint.",
+        "milestones": [
+            {"title": "Audit Export Feature", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Audit Export Feature", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Audit Export Feature"],
+        "expected_risks": [{"title": "Compliance rules mid-sprint update", "severity": "HIGH", "affected_milestone": "Audit Export Feature"}],
+        "difficulty": "medium",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_032",
+        "project_id": "stellar",
+        "input_text": "Mission Control Pilot is blocked by hardware delivery delay from aerospace supplier.",
+        "milestones": [
+            {"title": "Mission Control Pilot", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Mission Control Pilot", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Mission Control Pilot"],
+        "expected_risks": [{"title": "Hardware supplier delay", "severity": "HIGH", "affected_milestone": "Mission Control Pilot"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+    {
+        "id": "eval_033",
+        "project_id": "quantum",
+        "input_text": "Control Room Dashboard development is blocked pending UI wireframe sign-off by operations team.",
+        "milestones": [
+            {"title": "Control Room Dashboard", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Control Room Dashboard", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Control Room Dashboard"],
+        "expected_risks": [{"title": "UI sign-off pending", "severity": "MEDIUM", "affected_milestone": "Control Room Dashboard"}],
+        "difficulty": "easy",
+        "category": "blocker"
+    },
+
+    # --- 3. UNBLOCK (8 examples) ---
+    {
+        "id": "eval_004",
+        "project_id": "novabridge",
+        "input_text": "Database Migration is unblocked and ready for testing following the devops patch.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Blocked"},
+            {"title": "Firewall Rules Configuration", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Database Migration", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Database Migration"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_034",
+        "project_id": "celera",
+        "input_text": "Legal signed off on DPA. HIPAA Compliance Review is no longer blocked and resumed review.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "HIPAA Compliance Review", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["HIPAA Compliance Review"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_035",
+        "project_id": "orion",
+        "input_text": "Firewall Access Approval is unblocked after security cleared our IP whitelist request.",
+        "milestones": [
+            {"title": "Firewall Access Approval", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Firewall Access Approval", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Firewall Access Approval"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_036",
+        "project_id": "stellar",
+        "input_text": "Simulation Data Import unblocked following receipt of clean dataset from client.",
+        "milestones": [
+            {"title": "Simulation Data Import", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Simulation Data Import", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Simulation Data Import"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_037",
+        "project_id": "novabridge",
+        "input_text": "Firewall Rules Configuration has been unblocked by IT network team; work active.",
+        "milestones": [
+            {"title": "Firewall Rules Configuration", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Firewall Rules Configuration", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Firewall Rules Configuration"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_038",
+        "project_id": "driftwood",
+        "input_text": "Inventory Sync Setup unblocked after credentials refresh.",
+        "milestones": [
+            {"title": "Inventory Sync Setup", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Inventory Sync Setup", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Inventory Sync Setup"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_039",
+        "project_id": "quantum",
+        "input_text": "Telemetry Pipeline Design is unblocked as vendor rate limits were clarified.",
+        "milestones": [
+            {"title": "Telemetry Pipeline Design", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Telemetry Pipeline Design", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Telemetry Pipeline Design"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "unblock"
+    },
+    {
+        "id": "eval_040",
+        "project_id": "celera",
+        "input_text": "Audit Export Feature unblocked as privacy guidelines were locked down.",
+        "milestones": [
+            {"title": "Audit Export Feature", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Audit Export Feature", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Audit Export Feature"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "unblock"
+    },
+
+    # --- 4. PROGRESS UPDATE WITHOUT STATUS CHANGE (8 examples) ---
+    {
+        "id": "eval_005",
+        "project_id": "novabridge",
+        "input_text": "Engineering team continues testing the database migration scripts in staging.",
+        "milestones": [
+            {"title": "Database Migration", "status": "In Progress"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Database Migration"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_041",
+        "project_id": "orion",
+        "input_text": "Jake and Maya are actively writing code for API Integration Development.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["API Integration Development"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_042",
+        "project_id": "celera",
+        "input_text": "Clinical informatics team is reviewing allergy code mappings for FHIR API Development.",
+        "milestones": [
+            {"title": "FHIR API Development", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["FHIR API Development"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_043",
+        "project_id": "driftwood",
+        "input_text": "Storefront Theme QA team processed 40 test cases today with steady progress.",
+        "milestones": [
+            {"title": "Storefront Theme QA", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Storefront Theme QA"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_044",
+        "project_id": "quantum",
+        "input_text": "Telemetry Pipeline Design team met for daily standup to review data schemas.",
+        "milestones": [
+            {"title": "Telemetry Pipeline Design", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Telemetry Pipeline Design"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_045",
+        "project_id": "stellar",
+        "input_text": "Simulation Data Import scripts are running dry runs against non-prod database.",
+        "milestones": [
+            {"title": "Simulation Data Import", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Simulation Data Import"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_046",
+        "project_id": "orion",
+        "input_text": "Dispatcher Pilot & Go-Live team completed user onboarding session 2 of 4.",
+        "milestones": [
+            {"title": "Dispatcher Pilot & Go-Live", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Dispatcher Pilot & Go-Live"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "progress_no_status_change"
+    },
+    {
+        "id": "eval_047",
+        "project_id": "novabridge",
+        "input_text": "Integration Testing team built 12 additional test suites for endpoint verification.",
+        "milestones": [
+            {"title": "Integration Testing", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Integration Testing"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "progress_no_status_change"
+    },
+
+    # --- 5. PREREQUISITE COMPLETION (8 examples) ---
+    {
+        "id": "eval_002",
+        "project_id": "novabridge",
+        "input_text": "Firewall approval has been completed, clearing a prerequisite for firewall rules configuration.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Blocked"},
+            {"title": "Firewall Rules Configuration", "status": "Blocked"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Firewall Rules Configuration"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_048",
+        "project_id": "novabridge",
+        "input_text": "Database backup completed, which was a prerequisite for starting Database Migration.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Database Migration"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_049",
+        "project_id": "celera",
+        "input_text": "Client legal sign-off on NDA obtained, clearing prerequisite for HIPAA Compliance Review.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["HIPAA Compliance Review"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_050",
+        "project_id": "orion",
+        "input_text": "Pre-requisite security questionnaire submitted ahead of Firewall Access Approval.",
+        "milestones": [
+            {"title": "Firewall Access Approval", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Firewall Access Approval"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_051",
+        "project_id": "driftwood",
+        "input_text": "Catalog backup completed prior to starting Storefront Theme QA.",
+        "milestones": [
+            {"title": "Storefront Theme QA", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Storefront Theme QA"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_052",
+        "project_id": "quantum",
+        "input_text": "Procurement ticket resolved for vendor access, fulfilling pre-requisite for Vendor Sandbox Access.",
+        "milestones": [
+            {"title": "Vendor Sandbox Access", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Vendor Sandbox Access"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_053",
+        "project_id": "stellar",
+        "input_text": "Customer identity tenant created, satisfying prerequisite step for Identity Federation.",
+        "milestones": [
+            {"title": "Identity Federation", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Identity Federation"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "prerequisite_completion"
+    },
+    {
+        "id": "eval_054",
+        "project_id": "novabridge",
+        "input_text": "VPN tunnel established; this satisfies the prerequisite for Integration Testing.",
+        "milestones": [
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Integration Testing"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "prerequisite_completion"
+    },
+
+    # --- 6. AMBIGUOUS UPDATE (7 examples) ---
+    {
+        "id": "eval_006",
+        "project_id": "novabridge",
+        "input_text": "The team expects to finish the database migration soon.",
+        "milestones": [
+            {"title": "Database Migration", "status": "In Progress"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Database Migration"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "ambiguous_update"
+    },
+    {
+        "id": "eval_055",
+        "project_id": "orion",
+        "input_text": "API Integration Development is looking good and overall progress seems fine.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["API Integration Development"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "ambiguous_update"
+    },
+    {
+        "id": "eval_056",
+        "project_id": "celera",
+        "input_text": "We hope HIPAA Compliance Review will be resolved before the end of the month.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Blocked"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["HIPAA Compliance Review"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "ambiguous_update"
+    },
+    {
+        "id": "eval_057",
+        "project_id": "driftwood",
+        "input_text": "Things are moving along with Holiday Launch Prep.",
+        "milestones": [
+            {"title": "Holiday Launch Prep", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Holiday Launch Prep"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "ambiguous_update"
+    },
+    {
+        "id": "eval_058",
+        "project_id": "quantum",
+        "input_text": "Control Room Dashboard has some movement.",
+        "milestones": [
+            {"title": "Control Room Dashboard", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Control Room Dashboard"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "ambiguous_update"
+    },
+    {
+        "id": "eval_059",
+        "project_id": "stellar",
+        "input_text": "Security Discovery might have some updates later this week.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Security Discovery"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "ambiguous_update"
+    },
+    {
+        "id": "eval_060",
+        "project_id": "novabridge",
+        "input_text": "UAT & Go-Live status is being discussed internally.",
+        "milestones": [
+            {"title": "UAT & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["UAT & Go-Live"],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "ambiguous_update"
+    },
+
+    # --- 7. IRRELEVANT UPDATE (7 examples) ---
+    {
+        "id": "eval_007",
+        "project_id": "novabridge",
+        "input_text": "Team lunch has been moved to Friday at 1 PM in the main lounge.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Blocked"},
+            {"title": "Firewall Rules Configuration", "status": "Blocked"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+    {
+        "id": "eval_061",
+        "project_id": "orion",
+        "input_text": "Reminder to submit expense reports before the end of the fiscal quarter.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+    {
+        "id": "eval_062",
+        "project_id": "celera",
+        "input_text": "The office Wi-Fi router on 3rd floor will undergo maintenance on Saturday.",
+        "milestones": [
+            {"title": "FHIR API Development", "status": "Done"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+    {
+        "id": "eval_063",
+        "project_id": "driftwood",
+        "input_text": "Happy birthday to Tessa! Cupcakes in the kitchen.",
+        "milestones": [
+            {"title": "Storefront Theme QA", "status": "Done"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+    {
+        "id": "eval_064",
+        "project_id": "quantum",
+        "input_text": "Please update your Zoom client to version 5.16.",
+        "milestones": [
+            {"title": "Project Kickoff & Discovery", "status": "Done"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+    {
+        "id": "eval_065",
+        "project_id": "stellar",
+        "input_text": "Parking space allocations have been posted on Slack.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Done"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+    {
+        "id": "eval_066",
+        "project_id": "novabridge",
+        "input_text": "Don't forget to vote in the team shirt design poll.",
+        "milestones": [
+            {"title": "Project Kickoff", "status": "Done"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "irrelevant_update"
+    },
+
+    # --- 8. MULTIPLE CHANGES (8 examples) ---
+    {
+        "id": "eval_008",
+        "project_id": "novabridge",
+        "input_text": "Database Migration is finished and pushed to production, but Firewall Rules Configuration has hit a roadblock and is now blocked.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Open"},
+            {"title": "Firewall Rules Configuration", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Database Migration", "previous_status": "Open", "proposed_status": "Done"},
+            {"entity_name": "Firewall Rules Configuration", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Database Migration", "Firewall Rules Configuration"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_067",
+        "project_id": "orion",
+        "input_text": "Discovery & Requirements and Architecture Review are both completed and approved.",
+        "milestones": [
+            {"title": "Discovery & Requirements", "status": "Open"},
+            {"title": "Architecture Review", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Discovery & Requirements", "previous_status": "Open", "proposed_status": "Done"},
+            {"entity_name": "Architecture Review", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Discovery & Requirements", "Architecture Review"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_068",
+        "project_id": "celera",
+        "input_text": "FHIR API Development is finished, but HIPAA Compliance Review is now blocked due to legal review delays.",
+        "milestones": [
+            {"title": "FHIR API Development", "status": "In Progress"},
+            {"title": "HIPAA Compliance Review", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "FHIR API Development", "previous_status": "In Progress", "proposed_status": "Done"},
+            {"entity_name": "HIPAA Compliance Review", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["FHIR API Development", "HIPAA Compliance Review"],
+        "expected_risks": [{"title": "Legal review delay", "severity": "HIGH", "affected_milestone": "HIPAA Compliance Review"}],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_069",
+        "project_id": "driftwood",
+        "input_text": "Catalog Data Audit and Inventory Sync Setup are both complete and verified.",
+        "milestones": [
+            {"title": "Catalog Data Audit", "status": "Open"},
+            {"title": "Inventory Sync Setup", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Catalog Data Audit", "previous_status": "Open", "proposed_status": "Done"},
+            {"entity_name": "Inventory Sync Setup", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Catalog Data Audit", "Inventory Sync Setup"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_070",
+        "project_id": "quantum",
+        "input_text": "Project Kickoff & Discovery is complete. Vendor Sandbox Access is blocked by missing API keys.",
+        "milestones": [
+            {"title": "Project Kickoff & Discovery", "status": "Open"},
+            {"title": "Vendor Sandbox Access", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Project Kickoff & Discovery", "previous_status": "Open", "proposed_status": "Done"},
+            {"entity_name": "Vendor Sandbox Access", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Project Kickoff & Discovery", "Vendor Sandbox Access"],
+        "expected_risks": [{"title": "Missing API keys", "severity": "MEDIUM", "affected_milestone": "Vendor Sandbox Access"}],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_071",
+        "project_id": "stellar",
+        "input_text": "Security Discovery completed today; Identity Federation unblocked and opened.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Open"},
+            {"title": "Identity Federation", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Security Discovery", "previous_status": "Open", "proposed_status": "Done"},
+            {"entity_name": "Identity Federation", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["Security Discovery", "Identity Federation"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_072",
+        "project_id": "novabridge",
+        "input_text": "Database Migration is unblocked, while Integration Testing is now blocked due to server crash.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Blocked"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Database Migration", "previous_status": "Blocked", "proposed_status": "Open"},
+            {"entity_name": "Integration Testing", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Database Migration", "Integration Testing"],
+        "expected_risks": [{"title": "Staging server crash", "severity": "HIGH", "affected_milestone": "Integration Testing"}],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+    {
+        "id": "eval_073",
+        "project_id": "orion",
+        "input_text": "API Integration Development is complete and Firewall Access Approval is unblocked.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "In Progress"},
+            {"title": "Firewall Access Approval", "status": "Blocked"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "API Integration Development", "previous_status": "In Progress", "proposed_status": "Done"},
+            {"entity_name": "Firewall Access Approval", "previous_status": "Blocked", "proposed_status": "Open"}
+        ],
+        "expected_affected_milestones": ["API Integration Development", "Firewall Access Approval"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "multiple_changes"
+    },
+
+    # --- 9. RISK DETECTION (8 examples) ---
+    {
+        "id": "eval_009",
+        "project_id": "celera",
+        "input_text": "Vendor approval for FHIR API integration is delayed and may push Care Team UAT.",
+        "milestones": [
+            {"title": "FHIR API Development", "status": "Open"},
+            {"title": "Care Team UAT & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["FHIR API Development", "Care Team UAT & Go-Live"],
+        "expected_risks": [
+            {"title": "Vendor approval delay", "severity": "HIGH", "affected_milestone": "Care Team UAT & Go-Live"}
+        ],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_074",
+        "project_id": "novabridge",
+        "input_text": "DevOps lead is taking unplanned leave next week, which poses a severe timeline risk for Integration Testing.",
+        "milestones": [
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Integration Testing"],
+        "expected_risks": [{"title": "DevOps lead unplanned leave", "severity": "HIGH", "affected_milestone": "Integration Testing"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_075",
+        "project_id": "orion",
+        "input_text": "Rate limits on legacy client API may cause performance bottlenecks during Dispatcher Pilot & Go-Live.",
+        "milestones": [
+            {"title": "Dispatcher Pilot & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Dispatcher Pilot & Go-Live"],
+        "expected_risks": [{"title": "Legacy API rate limit bottleneck", "severity": "MEDIUM", "affected_milestone": "Dispatcher Pilot & Go-Live"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_076",
+        "project_id": "driftwood",
+        "input_text": "High order volume expected on launch date could exceed inventory sync database throughput.",
+        "milestones": [
+            {"title": "Inventory Sync Setup", "status": "Done"},
+            {"title": "Holiday Launch Prep", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Holiday Launch Prep"],
+        "expected_risks": [{"title": "Database throughput risk under high load", "severity": "HIGH", "affected_milestone": "Holiday Launch Prep"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_077",
+        "project_id": "quantum",
+        "input_text": "Sensor payload schema changes by vendor could break Telemetry Pipeline Design.",
+        "milestones": [
+            {"title": "Telemetry Pipeline Design", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Telemetry Pipeline Design"],
+        "expected_risks": [{"title": "Vendor payload schema instability", "severity": "HIGH", "affected_milestone": "Telemetry Pipeline Design"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_078",
+        "project_id": "stellar",
+        "input_text": "Customer security audit team requested extra compliance evidence, threatening Mission Control Pilot schedule.",
+        "milestones": [
+            {"title": "Mission Control Pilot", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Mission Control Pilot"],
+        "expected_risks": [{"title": "Audit evidence request delay", "severity": "MEDIUM", "affected_milestone": "Mission Control Pilot"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_079",
+        "project_id": "celera",
+        "input_text": "Audit Export Feature requires multi-region data hosting which is not yet provisioned in AWS.",
+        "milestones": [
+            {"title": "Audit Export Feature", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Audit Export Feature"],
+        "expected_risks": [{"title": "Unprovisioned multi-region AWS hosting", "severity": "HIGH", "affected_milestone": "Audit Export Feature"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+    {
+        "id": "eval_080",
+        "project_id": "novabridge",
+        "input_text": "Staging server disk space is at 94% capacity, which might cause Database Migration to crash.",
+        "milestones": [
+            {"title": "Database Migration", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Database Migration"],
+        "expected_risks": [{"title": "Low disk space on staging server", "severity": "HIGH", "affected_milestone": "Database Migration"}],
+        "difficulty": "medium",
+        "category": "risk_detection"
+    },
+
+    # --- 10. INVALID / MALFORMED INPUT (5 examples) ---
+    {
+        "id": "eval_010",
+        "project_id": "orion",
+        "input_text": "   ",
+        "milestones": [
+            {"title": "API Integration Development", "status": "Done"},
+            {"title": "Firewall Access Approval", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "invalid_malformed_input"
+    },
+    {
+        "id": "eval_081",
+        "project_id": "novabridge",
+        "input_text": "a",
+        "milestones": [
+            {"title": "Database Migration", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "invalid_malformed_input"
+    },
+    {
+        "id": "eval_082",
+        "project_id": "celera",
+        "input_text": "1234567890 !@#$%^&*()_+",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "invalid_malformed_input"
+    },
+    {
+        "id": "eval_083",
+        "project_id": "driftwood",
+        "input_text": "\n\n\t\t\n",
+        "milestones": [
+            {"title": "Catalog Data Audit", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "easy",
+        "category": "invalid_malformed_input"
+    },
+    {
+        "id": "eval_084",
+        "project_id": "quantum",
+        "input_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "milestones": [
+            {"title": "Telemetry Pipeline Design", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "invalid_malformed_input"
+    },
+
+    # --- 11. CROSS-PROJECT REFERENCES (6 examples) ---
+    {
+        "id": "eval_011",
+        "project_id": "orion",
+        "input_text": "NovaBridge database migration has been completed successfully by their backend team.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "Done"},
+            {"title": "Firewall Access Approval", "status": "Open"},
+            {"title": "Dispatcher Pilot & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "cross_project_references"
+    },
+    {
+        "id": "eval_085",
+        "project_id": "celera",
+        "input_text": "Driftwood storefront theme QA was finalized yesterday.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Open"},
+            {"title": "FHIR API Development", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "cross_project_references"
+    },
+    {
+        "id": "eval_086",
+        "project_id": "stellar",
+        "input_text": "Quantum vendor sandbox access has been granted.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Open"},
+            {"title": "Identity Federation", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "cross_project_references"
+    },
+    {
+        "id": "eval_087",
+        "project_id": "novabridge",
+        "input_text": "Celera health HIPAA compliance review completed by their legal counsel.",
+        "milestones": [
+            {"title": "Database Migration", "status": "Blocked"},
+            {"title": "Firewall Rules Configuration", "status": "Blocked"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "cross_project_references"
+    },
+    {
+        "id": "eval_088",
+        "project_id": "driftwood",
+        "input_text": "Orion logistics firewall access approval is blocked.",
+        "milestones": [
+            {"title": "Catalog Data Audit", "status": "Open"},
+            {"title": "Inventory Sync Setup", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "cross_project_references"
+    },
+    {
+        "id": "eval_089",
+        "project_id": "quantum",
+        "input_text": "Stellar Dynamics identity federation milestone has hit a blocker.",
+        "milestones": [
+            {"title": "Project Kickoff & Discovery", "status": "Open"},
+            {"title": "Telemetry Pipeline Design", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": [],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "cross_project_references"
+    },
+
+    # --- 12. NEGATION (6 examples) ---
+    {
+        "id": "eval_012",
+        "project_id": "novabridge",
+        "input_text": "Firewall Rules Configuration is NOT complete, despite earlier reports from QA.",
+        "milestones": [
+            {"title": "Firewall Rules Configuration", "status": "Blocked"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Firewall Rules Configuration"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "negation"
+    },
+    {
+        "id": "eval_090",
+        "project_id": "orion",
+        "input_text": "API Integration Development is definitely not finished yet.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["API Integration Development"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "negation"
+    },
+    {
+        "id": "eval_091",
+        "project_id": "celera",
+        "input_text": "FHIR API Development has not been completed; 5 endpoints still failing.",
+        "milestones": [
+            {"title": "FHIR API Development", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["FHIR API Development"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "negation"
+    },
+    {
+        "id": "eval_092",
+        "project_id": "driftwood",
+        "input_text": "Inventory Sync Setup is not blocked, despite rumours circulating on Slack.",
+        "milestones": [
+            {"title": "Inventory Sync Setup", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Inventory Sync Setup"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "negation"
+    },
+    {
+        "id": "eval_093",
+        "project_id": "quantum",
+        "input_text": "Vendor Sandbox Access is not unblocked; we are still waiting on permissions.",
+        "milestones": [
+            {"title": "Vendor Sandbox Access", "status": "Blocked"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Vendor Sandbox Access"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "negation"
+    },
+    {
+        "id": "eval_094",
+        "project_id": "stellar",
+        "input_text": "Identity Federation is by no means complete.",
+        "milestones": [
+            {"title": "Identity Federation", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Identity Federation"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "negation"
+    },
+
+    # --- 13. CONDITIONAL LANGUAGE (6 examples) ---
+    {
+        "id": "eval_013",
+        "project_id": "novabridge",
+        "input_text": "If security approves tomorrow, Integration Testing can begin.",
+        "milestones": [
+            {"title": "Firewall Rules Configuration", "status": "Blocked"},
+            {"title": "Integration Testing", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Integration Testing"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "conditional_language"
+    },
+    {
+        "id": "eval_095",
+        "project_id": "orion",
+        "input_text": "Assuming the server stays up over the weekend, API Integration Development will be done on Monday.",
+        "milestones": [
+            {"title": "API Integration Development", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["API Integration Development"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "conditional_language"
+    },
+    {
+        "id": "eval_096",
+        "project_id": "celera",
+        "input_text": "Provided legal signs the waiver, HIPAA Compliance Review can be marked finished.",
+        "milestones": [
+            {"title": "HIPAA Compliance Review", "status": "Blocked"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["HIPAA Compliance Review"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "conditional_language"
+    },
+    {
+        "id": "eval_097",
+        "project_id": "driftwood",
+        "input_text": "Should store QA find no bugs tomorrow, Storefront Theme QA will be complete.",
+        "milestones": [
+            {"title": "Storefront Theme QA", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Storefront Theme QA"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "conditional_language"
+    },
+    {
+        "id": "eval_098",
+        "project_id": "quantum",
+        "input_text": "In the event vendor sandbox tokens work, Vendor Sandbox Access will be cleared.",
+        "milestones": [
+            {"title": "Vendor Sandbox Access", "status": "Blocked"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Vendor Sandbox Access"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "conditional_language"
+    },
+    {
+        "id": "eval_099",
+        "project_id": "stellar",
+        "input_text": "Unless customer security raises objections, Security Discovery will close on Friday.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "In Progress"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Security Discovery"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "conditional_language"
+    },
+
+    # --- 14. FUTURE INTENT (6 examples) ---
+    {
+        "id": "eval_014",
+        "project_id": "novabridge",
+        "input_text": "We plan to complete UAT & Go-Live next week once staging validation wraps up.",
+        "milestones": [
+            {"title": "UAT & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["UAT & Go-Live"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "future_intent"
+    },
+    {
+        "id": "eval_100",
+        "project_id": "orion",
+        "input_text": "The team intends to finalize Dispatcher Pilot & Go-Live by Sept 5th.",
+        "milestones": [
+            {"title": "Dispatcher Pilot & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Dispatcher Pilot & Go-Live"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "future_intent"
+    },
+    {
+        "id": "eval_101",
+        "project_id": "celera",
+        "input_text": "We are targeting completion of Audit Export Feature by next sprint.",
+        "milestones": [
+            {"title": "Audit Export Feature", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Audit Export Feature"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "future_intent"
+    },
+    {
+        "id": "eval_102",
+        "project_id": "driftwood",
+        "input_text": "Engineering plans to begin Holiday Launch Prep on Thursday.",
+        "milestones": [
+            {"title": "Holiday Launch Prep", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Holiday Launch Prep"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "future_intent"
+    },
+    {
+        "id": "eval_103",
+        "project_id": "quantum",
+        "input_text": "We will deliver Control Room Dashboard at the end of October.",
+        "milestones": [
+            {"title": "Control Room Dashboard", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Control Room Dashboard"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "future_intent"
+    },
+    {
+        "id": "eval_104",
+        "project_id": "stellar",
+        "input_text": "Our roadmap calls for finishing Security Evidence Pack Delivery in November.",
+        "milestones": [
+            {"title": "Security Evidence Pack Delivery", "status": "Open"}
+        ],
+        "expected_no_change": True,
+        "expected_status_changes": [],
+        "expected_affected_milestones": ["Security Evidence Pack Delivery"],
+        "expected_risks": [],
+        "difficulty": "medium",
+        "category": "future_intent"
+    },
+
+    # --- 15. FALSE FRIEND / SIMILAR PROJECT NAMES (6 examples) ---
+    {
+        "id": "eval_015",
+        "project_id": "orion",
+        "input_text": "Firewall Access Approval is done. Note: this is for Orion access, not NovaBridge firewall rules.",
+        "milestones": [
+            {"title": "Firewall Access Approval", "status": "Open"},
+            {"title": "Dispatcher Pilot & Go-Live", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Firewall Access Approval", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Firewall Access Approval"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "false_friend_names"
+    },
+    {
+        "id": "eval_105",
+        "project_id": "novabridge",
+        "input_text": "Firewall Rules Configuration is blocked. (Do not confuse with Orion Firewall Access Approval).",
+        "milestones": [
+            {"title": "Database Migration", "status": "Open"},
+            {"title": "Firewall Rules Configuration", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Firewall Rules Configuration", "previous_status": "Open", "proposed_status": "Blocked"}
+        ],
+        "expected_affected_milestones": ["Firewall Rules Configuration"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "false_friend_names"
+    },
+    {
+        "id": "eval_106",
+        "project_id": "celera",
+        "input_text": "Audit Export Feature work completed. This is distinct from Catalog Data Audit.",
+        "milestones": [
+            {"title": "Audit Export Feature", "status": "Open"},
+            {"title": "HIPAA Compliance Review", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Audit Export Feature", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Audit Export Feature"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "false_friend_names"
+    },
+    {
+        "id": "eval_107",
+        "project_id": "driftwood",
+        "input_text": "Catalog Data Audit is completed. Note this is Driftwood catalog, not Celera audit export.",
+        "milestones": [
+            {"title": "Catalog Data Audit", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Catalog Data Audit", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Catalog Data Audit"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "false_friend_names"
+    },
+    {
+        "id": "eval_108",
+        "project_id": "quantum",
+        "input_text": "Project Kickoff & Discovery done for Quantum Perch. Kickoff for NovaBridge was already completed.",
+        "milestones": [
+            {"title": "Project Kickoff & Discovery", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Project Kickoff & Discovery", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Project Kickoff & Discovery"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "false_friend_names"
+    },
+    {
+        "id": "eval_109",
+        "project_id": "stellar",
+        "input_text": "Security Discovery finished for Stellar Dynamics.",
+        "milestones": [
+            {"title": "Security Discovery", "status": "Open"}
+        ],
+        "expected_no_change": False,
+        "expected_status_changes": [
+            {"entity_name": "Security Discovery", "previous_status": "Open", "proposed_status": "Done"}
+        ],
+        "expected_affected_milestones": ["Security Discovery"],
+        "expected_risks": [],
+        "difficulty": "hard",
+        "category": "false_friend_names"
+    }
+]
+
+print(f"Total dataset examples: {len(dataset)}")
+
+# Verify all ids are unique
+ids = [d["id"] for d in dataset]
+assert len(ids) == len(set(ids)), "Duplicate IDs found!"
+
+# Verify categories
+categories = set(d["category"] for d in dataset)
+print(f"Categories ({len(categories)}): {sorted(list(categories))}")
+
+# Write to file
+with open("evaluation/dataset.json", "w", encoding="utf-8") as f:
+    json.dump(dataset, f, indent=2)
+
+print("Dataset written successfully to evaluation/dataset.json!")

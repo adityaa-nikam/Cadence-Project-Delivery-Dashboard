@@ -170,21 +170,12 @@ def create_ai_proposal_service(
         if not project:
             raise ValueError(f"Project '{project_id}' not found.")
 
-        # Idempotency check: look for existing proposal with same hash
-        existing_prop = session.query(ProposalDB).filter(
+        # Delete any previous pending proposals for the same update hash to enable fresh interactive re-analysis
+        session.query(ProposalDB).filter(
             ProposalDB.project_id == project_id,
-            ProposalDB.update_hash == update_hash
-        ).first()
-
-        if existing_prop:
-            return {
-                "proposal_id": existing_prop.id,
-                "raw_text": existing_prop.raw_text,
-                "analysis": json.loads(existing_prop.analysis_json),
-                "is_duplicate": True,
-                "status": existing_prop.status,
-                "error": "⚠️ Duplicate update detected. Showing existing analysis."
-            }
+            ProposalDB.update_hash == update_hash,
+            ProposalDB.status == "Pending"
+        ).delete(synchronize_session=False)
 
         project_milestones = ms_repo.get_by_project(project_id)
         project_issues = issue_repo.get_by_project(project_id)

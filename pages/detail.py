@@ -234,12 +234,18 @@ def render_detail() -> None:
             for s_idx, scen in enumerate(demo_scenarios):
                 with scen_cols[s_idx]:
                     if st.button(f"⚡ {scen['title'][:25]}...", key=f"demo_scen_{project.id}_{s_idx}", type="secondary", use_container_width=True):
-                        st.session_state[f"update_input_{project.id}"] = scen["raw_text"]
+                        scen_text = scen.get("raw_text") or scen.get("text", "")
+                        st.session_state[f"update_input_field_{project.id}"] = scen_text
+                        try:
+                            res = services.create_ai_proposal_service(project.id, scen_text.strip())
+                            st.session_state[proposal_state_key] = res
+                        except Exception as ex:
+                            st.error(f"Failed to analyze demo scenario: {str(ex)}")
                         st.rerun()
 
         with st.form(f"update_form_{project.id}"):
             st.markdown("<div style='font-size:13px; font-weight:600; color:#334155; margin-bottom:4px;'>Step 1: Paste natural-language update (Email, Slack note, or Call summary)</div>", unsafe_allow_html=True)
-            current_input_val = st.session_state.get(f"update_input_{project.id}", "")
+            current_input_val = st.session_state.get(f"update_input_field_{project.id}", "")
             raw_text = st.text_area(
                 "Raw update content",
                 value=current_input_val,

@@ -238,29 +238,10 @@ def get_project_health(project, milestones, issues, updates) -> dict:
     flags = health["flags"]
     breakdown = health["breakdown"]
 
-    reasoning = f"Project scored {score}/100 ({grade}). "
     if breakdown:
-        reasoning += f"Deductions: {', '.join(breakdown)}. "
+        reasoning = f"{project.name} received a {grade} rating ({score}/100) due to: {', '.join(breakdown)}. The team should focus on resolving these active risk factors to ensure delivery stability."
     else:
-        reasoning += "No risk penalties detected. "
-
-    try:
-        api_key = _get_api_key()
-        if api_key:
-            prompt = f"""You are explaining a project health assessment to executives.
-
-Project Name: {project.name}
-Deterministic Health Score: {score}/100 ({grade})
-Deductions & Concerns: {breakdown}
-Active Flags: {flags}
-
-Write EXACTLY 2 professional sentences explaining why the project received this score and what the team should focus on."""
-
-            explanation = _call_groq_api([{"role": "user", "content": prompt}], temperature=0.3, max_tokens=200).strip()
-            if explanation:
-                reasoning = explanation
-    except Exception:
-        pass
+        reasoning = f"{project.name} achieved an optimal {score}/100 health score ({grade}), driven by complete milestone progress and zero active delivery blockages."
 
     return {
         "score": score,

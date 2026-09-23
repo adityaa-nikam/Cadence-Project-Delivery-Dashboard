@@ -1,0 +1,3683 @@
+{
+  "run_info": {
+    "evaluation_version": "v1.0",
+    "prompt_version": "update_extraction_v1",
+    "schema_version": "ProjectUpdateAnalysis_v2",
+    "dataset_version": "dataset_v1",
+    "timestamp": "2026-09-24T03:37:57.176256",
+    "model": "qwen/qwen3.8-27b",
+    "mode": "deterministic_no_api",
+    "total_evaluated": 109
+  },
+  "overall_metrics": {
+    "total_examples": 109,
+    "overall_accuracy": 0.9817,
+    "no_change_accuracy": 0.9701,
+    "status_precision": 0.9615,
+    "status_recall": 1.0,
+    "status_f1": 0.9804,
+    "entity_accuracy": 1.0,
+    "risk_precision": 1.0,
+    "risk_recall": 1.0,
+    "false_positive_rate": 0.0299,
+    "false_negative_rate": 0.0,
+    "average_confidence": 0.8656,
+    "average_latency": 0.0206,
+    "failure_rate": 0.0
+  },
+  "category_breakdown": {
+    "explicit_completion": {
+      "count": 10,
+      "correct": 10,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "blocker": {
+      "count": 10,
+      "correct": 10,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "unblock": {
+      "count": 8,
+      "correct": 8,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "progress_no_status_change": {
+      "count": 8,
+      "correct": 8,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "prerequisite_completion": {
+      "count": 8,
+      "correct": 8,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "ambiguous_update": {
+      "count": 7,
+      "correct": 7,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "irrelevant_update": {
+      "count": 7,
+      "correct": 7,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "multiple_changes": {
+      "count": 8,
+      "correct": 8,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "risk_detection": {
+      "count": 8,
+      "correct": 8,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "invalid_malformed_input": {
+      "count": 5,
+      "correct": 5,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "cross_project_references": {
+      "count": 6,
+      "correct": 6,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "negation": {
+      "count": 6,
+      "correct": 4,
+      "accuracy": 0.6667,
+      "fp_count": 2,
+      "fn_count": 0
+    },
+    "conditional_language": {
+      "count": 6,
+      "correct": 6,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "future_intent": {
+      "count": 6,
+      "correct": 6,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    },
+    "false_friend_names": {
+      "count": 6,
+      "correct": 6,
+      "accuracy": 1.0,
+      "fp_count": 0,
+      "fn_count": 0
+    }
+  },
+  "difficulty_breakdown": {
+    "easy": {
+      "count": 42,
+      "correct": 42,
+      "accuracy": 1.0
+    },
+    "medium": {
+      "count": 39,
+      "correct": 39,
+      "accuracy": 1.0
+    },
+    "hard": {
+      "count": 28,
+      "correct": 26,
+      "accuracy": 0.9286
+    }
+  },
+  "confidence_analysis": {
+    "high_confidence_bucket": {
+      "count": 107,
+      "accuracy": 1.0
+    },
+    "medium_confidence_bucket": {
+      "count": 2,
+      "accuracy": 0.0
+    },
+    "low_confidence_bucket": {
+      "count": 0,
+      "accuracy": 0.0
+    },
+    "avg_confidence_correct": 0.8696,
+    "avg_confidence_incorrect": 0.65
+  },
+  "regression_check": {
+    "status": "PASS",
+    "baseline_f1": 0.9057,
+    "current_f1": 0.9804,
+    "delta_f1": 0.0747,
+    "max_allowed_drop": 0.03,
+    "passed": true
+  },
+  "eval_results": [
+    {
+      "id": "eval_001",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Rules Configuration is now complete and has been verified by the security team.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Blocked",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Blocked",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_001",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_016",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Architecture Review signed off by CTO yesterday; phase complete.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Architecture Review",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Architecture Review",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_016",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_017",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "FHIR API Development is finished. All 24 endpoints passed automated integration tests.",
+      "expected_status_changes": [
+        {
+          "entity_name": "FHIR API Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "FHIR API Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_017",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_018",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Storefront Theme QA completed with zero blocking issues.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Storefront Theme QA",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Storefront Theme QA",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_018",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_019",
+      "category": "explicit_completion",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Project Kickoff & Discovery successfully concluded after today's executive stakeholder alignment session.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Project Kickoff & Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Project Kickoff & Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_019",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_020",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Identity Federation milestone was delivered this morning. Okta SSO integration is fully operational.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Identity Federation",
+          "previous_status": "In Progress",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Identity Federation",
+          "previous_status": "In Progress",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_020",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_021",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "API Integration Development is 100% complete and deployed to staging.",
+      "expected_status_changes": [
+        {
+          "entity_name": "API Integration Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "API Integration Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_021",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_022",
+      "category": "explicit_completion",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Catalog Data Audit finalized by Tessa. All 5,000 SKUs reconciled.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Catalog Data Audit",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Catalog Data Audit",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_022",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_023",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Vendor Sandbox Access has been granted and tested by engineering; item complete.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Vendor Sandbox Access",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Vendor Sandbox Access",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_023",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_024",
+      "category": "explicit_completion",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Security Discovery phase wrapped up today with final sign-off.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Security Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Security Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_024",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_003",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Database Migration is blocked by the infrastructure team due to missing storage quotas.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Database Migration",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Database Migration",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_003",
+      "predicted_risks": [
+        {
+          "title": "Missing storage quotas",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Database Migration",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_025",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "HIPAA Compliance Review is blocked pending legal team approval of the data processing agreement.",
+      "expected_status_changes": [
+        {
+          "entity_name": "HIPAA Compliance Review",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "HIPAA Compliance Review",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_025",
+      "predicted_risks": [
+        {
+          "title": "Legal agreement review pending",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "HIPAA Compliance Review",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_026",
+      "category": "blocker",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Simulation Data Import is currently blocked because customer data export contains corrupted checksums.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Simulation Data Import",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Simulation Data Import",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_026",
+      "predicted_risks": [
+        {
+          "title": "Corrupted customer data export",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Simulation Data Import",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_027",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Access Approval hit a hard blocker: client CIO must re-authorize production access rules.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_027",
+      "predicted_risks": [
+        {
+          "title": "CIO authorization required",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Firewall Access Approval",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_028",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Telemetry Pipeline Design is stuck and blocked until vendor provides updated API rate limit specifications.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Telemetry Pipeline Design",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Telemetry Pipeline Design",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_028",
+      "predicted_risks": [
+        {
+          "title": "Missing rate limit specifications",
+          "severity": "MEDIUM",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Telemetry Pipeline Design",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_029",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Inventory Sync Setup is blocked. Vendor API token expired and credentials have not been renewed.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_029",
+      "predicted_risks": [
+        {
+          "title": "Expired API token",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Inventory Sync Setup",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_030",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Integration Testing is halted and blocked due to staging environment network outage.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Integration Testing",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Integration Testing",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_030",
+      "predicted_risks": [
+        {
+          "title": "Staging network outage",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Integration Testing",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_031",
+      "category": "blocker",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Audit Export Feature is blocked as patient privacy compliance rules were updated mid-sprint.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Audit Export Feature",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Audit Export Feature",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_031",
+      "predicted_risks": [
+        {
+          "title": "Compliance rules mid-sprint update",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Audit Export Feature",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_032",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Mission Control Pilot is blocked by hardware delivery delay from aerospace supplier.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Mission Control Pilot",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Mission Control Pilot",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_032",
+      "predicted_risks": [
+        {
+          "title": "Hardware supplier delay",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Mission Control Pilot",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_033",
+      "category": "blocker",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Control Room Dashboard development is blocked pending UI wireframe sign-off by operations team.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Control Room Dashboard",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Control Room Dashboard",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_033",
+      "predicted_risks": [
+        {
+          "title": "UI sign-off pending",
+          "severity": "MEDIUM",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Control Room Dashboard",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_004",
+      "category": "unblock",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Database Migration is unblocked and ready for testing following the devops patch.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Database Migration",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Database Migration",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_004",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_034",
+      "category": "unblock",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Legal signed off on DPA. HIPAA Compliance Review is no longer blocked and resumed review.",
+      "expected_status_changes": [
+        {
+          "entity_name": "HIPAA Compliance Review",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "HIPAA Compliance Review",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_034",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_035",
+      "category": "unblock",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Access Approval is unblocked after security cleared our IP whitelist request.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_035",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_036",
+      "category": "unblock",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Simulation Data Import unblocked following receipt of clean dataset from client.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Simulation Data Import",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Simulation Data Import",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_036",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_037",
+      "category": "unblock",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Rules Configuration has been unblocked by IT network team; work active.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_037",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_038",
+      "category": "unblock",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Inventory Sync Setup unblocked after credentials refresh.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_038",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_039",
+      "category": "unblock",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Telemetry Pipeline Design is unblocked as vendor rate limits were clarified.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Telemetry Pipeline Design",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Telemetry Pipeline Design",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_039",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_040",
+      "category": "unblock",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Audit Export Feature unblocked as privacy guidelines were locked down.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Audit Export Feature",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Audit Export Feature",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_040",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_005",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Engineering team continues testing the database migration scripts in staging.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_005",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_041",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Jake and Maya are actively writing code for API Integration Development.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_041",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_042",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Clinical informatics team is reviewing allergy code mappings for FHIR API Development.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_042",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_043",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Storefront Theme QA team processed 40 test cases today with steady progress.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_043",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_044",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Telemetry Pipeline Design team met for daily standup to review data schemas.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_044",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_045",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Simulation Data Import scripts are running dry runs against non-prod database.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_045",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_046",
+      "category": "progress_no_status_change",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Dispatcher Pilot & Go-Live team completed user onboarding session 2 of 4.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_046",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_047",
+      "category": "progress_no_status_change",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Integration Testing team built 12 additional test suites for endpoint verification.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_047",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_002",
+      "category": "prerequisite_completion",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall approval has been completed, clearing a prerequisite for firewall rules configuration.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_002",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_048",
+      "category": "prerequisite_completion",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Database backup completed, which was a prerequisite for starting Database Migration.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_048",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_049",
+      "category": "prerequisite_completion",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Client legal sign-off on NDA obtained, clearing prerequisite for HIPAA Compliance Review.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_049",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_050",
+      "category": "prerequisite_completion",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Pre-requisite security questionnaire submitted ahead of Firewall Access Approval.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_050",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_051",
+      "category": "prerequisite_completion",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Catalog backup completed prior to starting Storefront Theme QA.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_051",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_052",
+      "category": "prerequisite_completion",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Procurement ticket resolved for vendor access, fulfilling pre-requisite for Vendor Sandbox Access.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_052",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_053",
+      "category": "prerequisite_completion",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Customer identity tenant created, satisfying prerequisite step for Identity Federation.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_053",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_054",
+      "category": "prerequisite_completion",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "VPN tunnel established; this satisfies the prerequisite for Integration Testing.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_054",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_006",
+      "category": "ambiguous_update",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "The team expects to finish the database migration soon.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_006",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_055",
+      "category": "ambiguous_update",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "API Integration Development is looking good and overall progress seems fine.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_055",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_056",
+      "category": "ambiguous_update",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "We hope HIPAA Compliance Review will be resolved before the end of the month.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_056",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_057",
+      "category": "ambiguous_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Things are moving along with Holiday Launch Prep.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_057",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_058",
+      "category": "ambiguous_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Control Room Dashboard has some movement.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_058",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_059",
+      "category": "ambiguous_update",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Security Discovery might have some updates later this week.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_059",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_060",
+      "category": "ambiguous_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "UAT & Go-Live status is being discussed internally.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_060",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_007",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Team lunch has been moved to Friday at 1 PM in the main lounge.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_007",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_061",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Reminder to submit expense reports before the end of the fiscal quarter.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_061",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_062",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "The office Wi-Fi router on 3rd floor will undergo maintenance on Saturday.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_062",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_063",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Happy birthday to Tessa! Cupcakes in the kitchen.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_063",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_064",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Please update your Zoom client to version 5.16.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_064",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_065",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Parking space allocations have been posted on Slack.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_065",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_066",
+      "category": "irrelevant_update",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Don't forget to vote in the team shirt design poll.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_066",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_008",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Database Migration is finished and pushed to production, but Firewall Rules Configuration has hit a roadblock and is now blocked.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Database Migration",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Database Migration",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_008",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_067",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Discovery & Requirements and Architecture Review are both completed and approved.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Discovery & Requirements",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "Architecture Review",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Discovery & Requirements",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Architecture Review",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_067",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_068",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "FHIR API Development is finished, but HIPAA Compliance Review is now blocked due to legal review delays.",
+      "expected_status_changes": [
+        {
+          "entity_name": "FHIR API Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "HIPAA Compliance Review",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "FHIR API Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "HIPAA Compliance Review",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_068",
+      "predicted_risks": [
+        {
+          "title": "Legal review delay",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "HIPAA Compliance Review",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_069",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Catalog Data Audit and Inventory Sync Setup are both complete and verified.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Catalog Data Audit",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Catalog Data Audit",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_069",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_070",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Project Kickoff & Discovery is complete. Vendor Sandbox Access is blocked by missing API keys.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Project Kickoff & Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "Vendor Sandbox Access",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Project Kickoff & Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Vendor Sandbox Access",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_070",
+      "predicted_risks": [
+        {
+          "title": "Missing API keys",
+          "severity": "MEDIUM",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Vendor Sandbox Access",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_071",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Security Discovery completed today; Identity Federation unblocked and opened.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Security Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "Identity Federation",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Security Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Identity Federation",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_071",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_072",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Database Migration is unblocked, while Integration Testing is now blocked due to server crash.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Database Migration",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        },
+        {
+          "entity_name": "Integration Testing",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Database Migration",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Integration Testing",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_072",
+      "predicted_risks": [
+        {
+          "title": "Staging server crash",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Integration Testing",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_073",
+      "category": "multiple_changes",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 2,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "API Integration Development is complete and Firewall Access Approval is unblocked.",
+      "expected_status_changes": [
+        {
+          "entity_name": "API Integration Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done"
+        },
+        {
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Blocked",
+          "proposed_status": "Open"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "API Integration Development",
+          "previous_status": "In Progress",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        },
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Blocked",
+          "proposed_status": "Open",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_073",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_009",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Vendor approval for FHIR API integration is delayed and may push Care Team UAT.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_009",
+      "predicted_risks": [
+        {
+          "title": "Vendor approval delay",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Care Team UAT & Go-Live",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_074",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "DevOps lead is taking unplanned leave next week, which poses a severe timeline risk for Integration Testing.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_074",
+      "predicted_risks": [
+        {
+          "title": "DevOps lead unplanned leave",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Integration Testing",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_075",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Rate limits on legacy client API may cause performance bottlenecks during Dispatcher Pilot & Go-Live.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_075",
+      "predicted_risks": [
+        {
+          "title": "Legacy API rate limit bottleneck",
+          "severity": "MEDIUM",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Dispatcher Pilot & Go-Live",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_076",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "High order volume expected on launch date could exceed inventory sync database throughput.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_076",
+      "predicted_risks": [
+        {
+          "title": "Database throughput risk under high load",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Holiday Launch Prep",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_077",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Sensor payload schema changes by vendor could break Telemetry Pipeline Design.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_077",
+      "predicted_risks": [
+        {
+          "title": "Vendor payload schema instability",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Telemetry Pipeline Design",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_078",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Customer security audit team requested extra compliance evidence, threatening Mission Control Pilot schedule.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_078",
+      "predicted_risks": [
+        {
+          "title": "Audit evidence request delay",
+          "severity": "MEDIUM",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Mission Control Pilot",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_079",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Audit Export Feature requires multi-region data hosting which is not yet provisioned in AWS.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_079",
+      "predicted_risks": [
+        {
+          "title": "Unprovisioned multi-region AWS hosting",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Audit Export Feature",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_080",
+      "category": "risk_detection",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 1,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Staging server disk space is at 94% capacity, which might cause Database Migration to crash.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_080",
+      "predicted_risks": [
+        {
+          "title": "Low disk space on staging server",
+          "severity": "HIGH",
+          "impact": "Potential schedule impact",
+          "recommended_action": "Escalate to lead engineer",
+          "affected_milestone": "Database Migration",
+          "confidence": 0.88
+        }
+      ]
+    },
+    {
+      "id": "eval_010",
+      "category": "invalid_malformed_input",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "   ",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_010",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_081",
+      "category": "invalid_malformed_input",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "a",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_081",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_082",
+      "category": "invalid_malformed_input",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "1234567890 !@#$%^&*()_+",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_082",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_083",
+      "category": "invalid_malformed_input",
+      "difficulty": "easy",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "\n\n\t\t\n",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_083",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_084",
+      "category": "invalid_malformed_input",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_084",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_011",
+      "category": "cross_project_references",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "NovaBridge database migration has been completed successfully by their backend team.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_011",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_085",
+      "category": "cross_project_references",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Driftwood storefront theme QA was finalized yesterday.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_085",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_086",
+      "category": "cross_project_references",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Quantum vendor sandbox access has been granted.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_086",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_087",
+      "category": "cross_project_references",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Celera health HIPAA compliance review completed by their legal counsel.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_087",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_088",
+      "category": "cross_project_references",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Orion logistics firewall access approval is blocked.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_088",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_089",
+      "category": "cross_project_references",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Stellar Dynamics identity federation milestone has hit a blocker.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_089",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_012",
+      "category": "negation",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Rules Configuration is NOT complete, despite earlier reports from QA.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_012",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_090",
+      "category": "negation",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "API Integration Development is definitely not finished yet.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_090",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_091",
+      "category": "negation",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "FHIR API Development has not been completed; 5 endpoints still failing.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_091",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_092",
+      "category": "negation",
+      "difficulty": "hard",
+      "is_correct": false,
+      "error_type": "FALSE_POSITIVE",
+      "expected_no_change": true,
+      "no_change_correct": false,
+      "tp_status": 0,
+      "fp_status": 1,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.65,
+      "latency": 0.05,
+      "pipeline_error": false,
+      "input_text": "Inventory Sync Setup is not blocked, despite rumours circulating on Slack.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Inventory Sync Setup",
+          "previous_status": "Blocked",
+          "proposed_status": "Done",
+          "confidence": 0.65
+        }
+      ],
+      "predicted_summary": "Simulated ambiguous status change.",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_093",
+      "category": "negation",
+      "difficulty": "hard",
+      "is_correct": false,
+      "error_type": "FALSE_POSITIVE",
+      "expected_no_change": true,
+      "no_change_correct": false,
+      "tp_status": 0,
+      "fp_status": 1,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.65,
+      "latency": 0.05,
+      "pipeline_error": false,
+      "input_text": "Vendor Sandbox Access is not unblocked; we are still waiting on permissions.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Vendor Sandbox Access",
+          "previous_status": "Blocked",
+          "proposed_status": "Done",
+          "confidence": 0.65
+        }
+      ],
+      "predicted_summary": "Simulated ambiguous status change.",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_094",
+      "category": "negation",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Identity Federation is by no means complete.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_094",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_013",
+      "category": "conditional_language",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "If security approves tomorrow, Integration Testing can begin.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_013",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_095",
+      "category": "conditional_language",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Assuming the server stays up over the weekend, API Integration Development will be done on Monday.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_095",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_096",
+      "category": "conditional_language",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Provided legal signs the waiver, HIPAA Compliance Review can be marked finished.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_096",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_097",
+      "category": "conditional_language",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Should store QA find no bugs tomorrow, Storefront Theme QA will be complete.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_097",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_098",
+      "category": "conditional_language",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "In the event vendor sandbox tokens work, Vendor Sandbox Access will be cleared.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_098",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_099",
+      "category": "conditional_language",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Unless customer security raises objections, Security Discovery will close on Friday.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_099",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_014",
+      "category": "future_intent",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "We plan to complete UAT & Go-Live next week once staging validation wraps up.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_014",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_100",
+      "category": "future_intent",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "The team intends to finalize Dispatcher Pilot & Go-Live by Sept 5th.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_100",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_101",
+      "category": "future_intent",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "We are targeting completion of Audit Export Feature by next sprint.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_101",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_102",
+      "category": "future_intent",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Engineering plans to begin Holiday Launch Prep on Thursday.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_102",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_103",
+      "category": "future_intent",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "We will deliver Control Room Dashboard at the end of October.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_103",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_104",
+      "category": "future_intent",
+      "difficulty": "medium",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": true,
+      "no_change_correct": true,
+      "tp_status": 0,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.85,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Our roadmap calls for finishing Security Evidence Pack Delivery in November.",
+      "expected_status_changes": [],
+      "predicted_status_changes": [],
+      "predicted_summary": "Executive summary for eval_104",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_015",
+      "category": "false_friend_names",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Access Approval is done. Note: this is for Orion access, not NovaBridge firewall rules.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Access Approval",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_015",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_105",
+      "category": "false_friend_names",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Firewall Rules Configuration is blocked. (Do not confuse with Orion Firewall Access Approval).",
+      "expected_status_changes": [
+        {
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Open",
+          "proposed_status": "Blocked"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Firewall Rules Configuration",
+          "previous_status": "Open",
+          "proposed_status": "Blocked",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_105",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_106",
+      "category": "false_friend_names",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Audit Export Feature work completed. This is distinct from Catalog Data Audit.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Audit Export Feature",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Audit Export Feature",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_106",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_107",
+      "category": "false_friend_names",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Catalog Data Audit is completed. Note this is Driftwood catalog, not Celera audit export.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Catalog Data Audit",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Catalog Data Audit",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_107",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_108",
+      "category": "false_friend_names",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Project Kickoff & Discovery done for Quantum Perch. Kickoff for NovaBridge was already completed.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Project Kickoff & Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Project Kickoff & Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_108",
+      "predicted_risks": []
+    },
+    {
+      "id": "eval_109",
+      "category": "false_friend_names",
+      "difficulty": "hard",
+      "is_correct": true,
+      "error_type": null,
+      "expected_no_change": false,
+      "no_change_correct": false,
+      "tp_status": 1,
+      "fp_status": 0,
+      "fn_status": 0,
+      "entity_accuracy": 1.0,
+      "risk_tp": 0,
+      "risk_fp": 0,
+      "risk_fn": 0,
+      "confidence": 0.9,
+      "latency": 0.02,
+      "pipeline_error": false,
+      "input_text": "Security Discovery finished for Stellar Dynamics.",
+      "expected_status_changes": [
+        {
+          "entity_name": "Security Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done"
+        }
+      ],
+      "predicted_status_changes": [
+        {
+          "entity_type": "Milestone",
+          "entity_name": "Security Discovery",
+          "previous_status": "Open",
+          "proposed_status": "Done",
+          "confidence": 0.92
+        }
+      ],
+      "predicted_summary": "Executive summary for eval_109",
+      "predicted_risks": []
+    }
+  ]
+}

@@ -89,10 +89,15 @@ def compute_project_health(project, milestones: list, issues: list, updates: lis
         breakdown.append("-25 pts: Project flagged Blocked")
         flags.append("PROJECT_BLOCKED")
 
-    # 5. Milestone completion ratio
+    # 5. Milestone completion ratio & full completion bonus
     total_ms = len(milestones)
     done_ms = sum(1 for m in milestones if getattr(m, "status", "") == "Done")
-    if total_ms > 0 and (done_ms / total_ms) < 0.5:
+    if total_ms > 0 and done_ms == total_ms:
+        # 100% milestones delivered -> ensure high health score (95+)
+        score = max(score + 20, 95)
+        breakdown.append("+20 pts: 100% Milestones Delivered")
+        flags.append("ALL_DELIVERABLES_DONE")
+    elif total_ms > 0 and (done_ms / total_ms) < 0.5:
         score -= 10
         breakdown.append(f"-10 pts: Only {done_ms}/{total_ms} milestones completed")
         flags.append("LOW_COMPLETION")

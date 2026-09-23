@@ -50,20 +50,18 @@ def prepend_update(update_obj) -> None:
 
 def get_or_compute_health(project_id, project, milestones, issues, updates):
     """
-    Get cached health score or compute new one.
-    Cache invalidates when milestone statuses change.
+    Compute project health score with signature invalidation.
+    Cache updates instantly whenever milestones or issues change.
     """
-    cache_key = f"health_{project_id}"
-    sig_key = f"health_sig_{project_id}"
+    cache_key = f"health_cache_{project_id}"
+    ms_sig = tuple((m.id, m.status) for m in milestones)
+    iss_sig = tuple((getattr(i, 'id', ''), getattr(i, 'status', '')) for i in issues)
+    sig_key = (ms_sig, iss_sig)
 
-    # Create signature from milestone statuses
-    milestone_sig = str([(m.id, m.status) for m in milestones])
-
-    if cache_key not in st.session_state or st.session_state.get(sig_key) != milestone_sig:
+    if cache_key not in st.session_state or st.session_state.get(f"sig_{project_id}") != sig_key:
         from ai_helper import get_project_health
-
         health = get_project_health(project, milestones, issues, updates)
         st.session_state[cache_key] = health
-        st.session_state[sig_key] = milestone_sig
+        st.session_state[f"sig_{project_id}"] = sig_key
 
     return st.session_state[cache_key]
