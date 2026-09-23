@@ -6,8 +6,14 @@ import re
 
 import streamlit as st
 
-# Groq API - using Llama 3.3 70B
-GROQ_MODEL = "llama-3.3-70b-versatile"
+# Groq API - supported models list with fallback
+GROQ_MODELS = [
+    "qwen/qwen3.8-27b",
+    "llama-3.3-70b-versatile",
+    "openai/gpt-oss-120b",
+    "llama-3.1-8b-instant",
+]
+GROQ_MODEL = GROQ_MODELS[0]
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 
 
@@ -30,48 +36,64 @@ def _get_api_key() -> str:
 
 def _call_groq_api(messages: list, temperature: float = 0.3, max_tokens: int = 500) -> str:
     """
-    Call Groq API using OpenAI SDK or urllib HTTP fallback.
+    Call Groq API using OpenAI SDK or urllib HTTP fallback across supported models.
     Returns response text string or raises Exception.
     """
     api_key = _get_api_key()
     if not api_key:
         raise ValueError("GROQ_API_KEY is not configured.")
 
-    # 1. Try OpenAI SDK
+    last_exception = None
+
+    # 1. Try OpenAI SDK across candidate models
     try:
         from openai import OpenAI
         client = OpenAI(base_url=GROQ_BASE_URL, api_key=api_key)
-        response = client.chat.completions.create(
-            model=GROQ_MODEL,
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,
-        )
-        return response.choices[0].message.content
+        for model in GROQ_MODELS:
+            try:
+                response = client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                last_exception = e
+                continue
     except Exception as e:
-        # Fallback to direct HTTP via urllib
-        pass
+        last_exception = e
 
-    # 2. Direct HTTP Fallback
+    # 2. Direct HTTP Fallback across candidate models
     import urllib.request
-    req = urllib.request.Request(
-        f"{GROQ_BASE_URL}/chat/completions",
-        data=json.dumps({
-            "model": GROQ_MODEL,
-            "messages": messages,
-            "temperature": temperature,
-            "max_tokens": max_tokens
-        }).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0"
-        },
-        method="POST"
-    )
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
-        return data["choices"][0]["message"]["content"]
+    for model in GROQ_MODELS:
+        try:
+            req = urllib.request.Request(
+                f"{GROQ_BASE_URL}/chat/completions",
+                data=json.dumps({
+                    "model": model,
+                    "messages": messages,
+                    "temperature": temperature,
+                    "max_tokens": max_tokens
+                }).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                    "User-Agent": "Mozilla/5.0"
+                },
+                method="POST"
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                return data["choices"][0]["message"]["content"]
+        except Exception as e:
+            last_exception = e
+            continue
+
+    if last_exception:
+        raise last_exception
+    raise RuntimeError("Failed to get response from Groq API.")
+
 
 
 def _clean_response(text: str) -> str:

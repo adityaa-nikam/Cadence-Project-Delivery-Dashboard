@@ -63,7 +63,7 @@ class MockDataAndStateTests(unittest.TestCase):
         inserted = UPDATES[0].__class__(
             id="test-update",
             project_id=project.id,
-            timestamp="2026-09-01T12:00:00",
+            timestamp="2026-09-25T12:00:00",
             raw_text="newest update",
             structured_summary="",
             affected_milestone=original_milestone.title,
