@@ -22,7 +22,7 @@ Built for the **FlytBase AI-Native Customer Teams Hackathon**.
 
 The portfolio dashboard provides a unified view of active delivery projects, project health, milestone completion, blocked work, and AI-generated activity.
 
-![Cadence Portfolio Dashboard](screenshots/dashboard.png)
+![Cadence Portfolio Dashboard](screenshots/home.png)
 
 ---
 
@@ -30,7 +30,7 @@ The portfolio dashboard provides a unified view of active delivery projects, pro
 
 Each project has a detailed delivery workspace with AI health assessment, milestone progress, risks, issues, and separate internal/customer perspectives.
 
-![Cadence Project Delivery View](screenshots/project-detail.png)
+![Cadence Project Delivery View](screenshots/home02.png)
 
 ---
 
@@ -63,3 +63,30 @@ Customer / Engineering / Support Updates
         Manual Status Updates
                   ↓
        Fragmented Project View
+
+---
+
+# 💡 The Solution
+
+Cadence provides a unified project delivery workspace that converts scattered project updates into structured delivery intelligence.
+
+Instead of manually updating project status after every email, chat message, or engineering update, delivery teams can provide a natural-language update and let AI extract the important delivery signals.
+
+### Cadence workflow
+
+```text
+Natural-Language Project Update
+              ↓
+          AI Processing
+              ↓
+    Extract Delivery Signals
+              ↓
+ ┌────────────┬────────────┬────────────┐
+ ↓            ↓            ↓            ↓
+Milestone   Progress       Risk       Blocker
+              ↓
+       Project State Update
+              ↓
+        Activity Feed
+              ↓
+    Customer Status Draft
