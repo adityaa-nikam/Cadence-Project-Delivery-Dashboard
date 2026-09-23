@@ -106,198 +106,168 @@ def _clean_response(text: str) -> str:
 
 def parse_update(raw_text: str, milestones: list) -> dict:
     """
-    Calls Groq to extract structured info from a raw update.
+    Extract structured update proposals, confidence, risks, and summary using Groq AI and Pydantic.
     """
+    from utils.schemas import ProjectUpdateAnalysis, StatusChangeProposal, RiskProposal
+
+    if not raw_text or not raw_text.strip():
+        return {
+            "summary": "Empty update provided.",
+            "affected_milestones": [],
+            "affected_issues": [],
+            "risks": [],
+            "status_changes": [],
+            "overall_confidence": 0.0,
+            "reasoning_summary": "Empty input text.",
+            "affected_milestone": "Unknown",
+            "new_status": None,
+            "error": "Empty update text provided.",
+        }
+
+    milestone_list_str = "\n".join(
+        [f"- {m.title} (current status: {m.status})" for m in milestones]
+    )
+
+    prompt = f"""You are a senior AI project delivery analyst. Analyze this project status update.
+
+Target Project Milestones:
+{milestone_list_str}
+
+Raw Update Text:
+"{raw_text}"
+
+Instructions:
+1. Extract a clean 1-sentence executive summary suitable for a customer status feed.
+2. List affected milestone titles matching the EXACT titles above.
+3. Identify any proposed status changes for milestones (Open, Blocked, Done, In Progress). Only propose changes clearly implied by the update.
+CRITICAL CONSTRAINT ON PREREQUISITES vs MILESTONES:
+Do NOT interpret prerequisite completion or dependency approval as milestone completion.
+For example, if the update text says "Firewall approval has been completed, clearing a prerequisite for firewall rules configuration", do NOT propose setting the milestone "Firewall Rules Configuration" to "Done", because completing a prerequisite is NOT completing the milestone itself.
+Only propose setting a milestone status to "Done" if the update text explicitly states that the target milestone ITSELF is complete, finished, delivered, or verified.
+4. Estimate a realistic confidence score (0.0 to 1.0) for each status change.
+5. Identify any new risks (severity HIGH, MEDIUM, LOW) with recommended action.
+
+Return ONLY valid JSON matching this schema:
+{{
+  "summary": "<clean 1-sentence summary>",
+  "affected_milestones": ["<exact title from list>"],
+  "affected_issues": [],
+  "risks": [
+    {{
+      "title": "<short risk title>",
+      "severity": "HIGH|MEDIUM|LOW",
+      "impact": "<potential impact>",
+      "recommended_action": "<suggested action>",
+      "affected_milestone": "<milestone title or null>",
+      "confidence": 0.85
+    }}
+  ],
+  "status_changes": [
+    {{
+      "entity_type": "Milestone",
+      "entity_name": "<exact title from list>",
+      "previous_status": "<Open|Blocked|Done|null>",
+      "proposed_status": "<Open|Blocked|Done|In Progress>",
+      "reason": "<justification>",
+      "confidence": 0.90
+    }}
+  ],
+  "overall_confidence": 0.92,
+  "reasoning_summary": "<brief explanation>"
+}}"""
+
     try:
         api_key = _get_api_key()
         if not api_key:
             return {
+                "summary": raw_text[:100] + "...",
+                "affected_milestones": [],
+                "affected_issues": [],
+                "risks": [],
+                "status_changes": [],
+                "overall_confidence": 0.5,
+                "reasoning_summary": "API Key missing.",
                 "affected_milestone": "Unknown",
                 "new_status": None,
-                "summary": raw_text[:100] + "...",
-                "error": "⚠️ GROQ_API_KEY not set. Showing raw text as summary.",
+                "error": "⚠️ GROQ_API_KEY not set. Showing raw text.",
             }
 
-        milestone_list_str = "\n".join(
-            [f"- {m.title} (current status: {m.status})" for m in milestones]
-        )
+        text = _clean_response(_call_groq_api([{"role": "user", "content": prompt}], temperature=0.1, max_tokens=700))
+        parsed_dict = json.loads(text)
 
-        prompt = f"""You are helping a delivery team log project status updates.
+        # Validate with Pydantic
+        analysis = ProjectUpdateAnalysis.model_validate(parsed_dict)
+        analysis_dict = analysis.model_dump()
 
-The project has these milestones:
-{milestone_list_str}
+        # Legacy compatibility keys for existing UI widgets
+        affected_ms = analysis_dict["affected_milestones"][0] if analysis_dict["affected_milestones"] else "Unknown"
+        first_change = analysis_dict["status_changes"][0] if analysis_dict["status_changes"] else None
+        new_st = first_change["proposed_status"] if first_change else None
 
-Given this raw update text:
-"{raw_text}"
+        analysis_dict["affected_milestone"] = affected_ms
+        analysis_dict["new_status"] = new_st
+        analysis_dict["error"] = None
+        return analysis_dict
 
-Extract:
-1. Which milestone/task title it most likely relates to.
-   Use the EXACT title from the list above. If unclear, use null.
-2. The new status — ONLY if the update implies the status should change
-   (Open / Blocked / Done). If no status change is implied, use null.
-3. A clean one-sentence summary suitable for a customer-facing update feed.
-   Professional tone, no typos, factual.
-
-Return ONLY valid JSON, no markdown, no explanation:
-{{
-  "affected_milestone": "<exact title from list or null>",
-  "new_status": "<Open|Blocked|Done|null>",
-  "summary": "<one professional sentence>"
-}}"""
-
-        text = _clean_response(_call_groq_api([{"role": "user", "content": prompt}], temperature=0.2, max_tokens=500))
-        parsed = json.loads(text)
-
-        if parsed.get("new_status") in [None, "null", ""]:
-            parsed["new_status"] = None
-        if parsed.get("affected_milestone") in [None, "null", ""]:
-            parsed["affected_milestone"] = "Unknown"
-
-        parsed["error"] = None
-        return parsed
-
-    except json.JSONDecodeError:
-        try:
-            match = re.search(r"\{.*?\}", text, re.DOTALL)
-            if match:
-                parsed = json.loads(match.group())
-                if parsed.get("new_status") in [None, "null", ""]:
-                    parsed["new_status"] = None
-                if parsed.get("affected_milestone") in [None, "null", ""]:
-                    parsed["affected_milestone"] = "Unknown"
-                parsed["error"] = None
-                return parsed
-        except Exception:
-            pass
-        return {
-            "affected_milestone": "Unknown",
-            "new_status": None,
-            "summary": "Update received — could not parse automatically.",
-            "error": "⚠️ AI returned unexpected format. Summary approximated.",
-        }
     except Exception as e:
+        # Graceful fallback: zero state mutation on failure
         return {
+            "summary": raw_text[:120],
+            "affected_milestones": [],
+            "affected_issues": [],
+            "risks": [],
+            "status_changes": [],
+            "overall_confidence": 0.0,
+            "reasoning_summary": f"Fallback due to error: {str(e)}",
             "affected_milestone": "Unknown",
             "new_status": None,
-            "summary": raw_text[:120],
-            "error": f"⚠️ AI call failed: {str(e)[:80]}",
+            "error": f"⚠️ AI extraction fallback: {str(e)[:100]}",
         }
 
 
 def get_project_health(project, milestones, issues, updates) -> dict:
     """
-    Returns a health assessment for a project using Groq AI.
+    Calculate deterministic project health in Python and use Groq AI to explain the score.
+    AI explains the score; Python calculates it.
     """
-    from datetime import datetime
+    from utils.health_engine import compute_project_health
 
-    done_count = sum(1 for m in milestones if m.status == "Done")
-    open_count = sum(1 for m in milestones if m.status == "Open")
-    blocked_count = sum(1 for m in milestones if m.status == "Blocked")
-    total_milestones = len(milestones)
+    health = compute_project_health(project, milestones, issues, updates)
+    score = health["score"]
+    grade = health["grade"]
+    flags = health["flags"]
+    breakdown = health["breakdown"]
 
-    issue_by_cat = {}
-    for issue in issues:
-        issue_by_cat[issue.category] = issue_by_cat.get(issue.category, 0) + 1
-    issue_breakdown = ", ".join([f"{v} {k}" for k, v in issue_by_cat.items()]) if issue_by_cat else "none"
-
-    project_updates = [u for u in updates if u.project_id == project.id]
-    days_since_update = 999
-    if project_updates:
-        try:
-            latest = max(project_updates, key=lambda u: u.timestamp)
-            latest_dt = datetime.fromisoformat(latest.timestamp)
-            days_since_update = (datetime.now() - latest_dt).days
-        except Exception:
-            pass
+    reasoning = f"Project scored {score}/100 ({grade}). "
+    if breakdown:
+        reasoning += f"Deductions: {', '.join(breakdown)}. "
+    else:
+        reasoning += "No risk penalties detected. "
 
     try:
         api_key = _get_api_key()
         if api_key:
-            prompt = f"""You are a project delivery health analyzer. Assess the health of this project.
+            prompt = f"""You are explaining a project health assessment to executives.
 
-Project: {project.name} | Status: {project.overall_status}
-Milestones: {done_count} Done, {open_count} Open, {blocked_count} Blocked out of {total_milestones} total
-Issues: {len(issues)} open issues ({issue_breakdown})
-Last update: {days_since_update} days ago | Total updates: {len(project_updates)}
+Project Name: {project.name}
+Deterministic Health Score: {score}/100 ({grade})
+Deductions & Concerns: {breakdown}
+Active Flags: {flags}
 
-Return ONLY valid JSON:
-{{
-  "score": <integer 0-100>,
-  "grade": "<Healthy|At Risk|Critical>",
-  "reasoning": "<exactly 2 sentences explaining the score>",
-  "flags": ["<specific concern 1>", "<specific concern 2>"]
-}}
+Write EXACTLY 2 professional sentences explaining why the project received this score and what the team should focus on."""
 
-Scoring guide:
-- Start at 100
-- Deduct 15 per Blocked milestone
-- Deduct 5 per Open milestone past 50% of project
-- Deduct 10 if last update > 7 days ago
-- Deduct 10 if more than 2 open Bugs
-- Healthy = 75-100, At Risk = 45-74, Critical = 0-44"""
-
-            text = _clean_response(_call_groq_api([{"role": "user", "content": prompt}], temperature=0.2, max_tokens=500))
-            parsed = json.loads(text)
-
-            score = max(0, min(100, int(parsed.get("score", 0))))
-            grade = parsed.get("grade", "Critical")
-            if grade not in ["Healthy", "At Risk", "Critical"]:
-                grade = "Critical"
-            reasoning = parsed.get("reasoning", "Health assessment completed.")
-            flags = parsed.get("flags", [])
-            if not isinstance(flags, list):
-                flags = []
-
-            return {
-                "score": score,
-                "grade": grade,
-                "reasoning": reasoning,
-                "flags": flags,
-                "error": None
-            }
+            explanation = _call_groq_api([{"role": "user", "content": prompt}], temperature=0.3, max_tokens=200).strip()
+            if explanation:
+                reasoning = explanation
     except Exception:
-        pass  # Fall through to local fallback
-
-    score = 100
-    score -= blocked_count * 15
-    if total_milestones > 0 and open_count > total_milestones // 2:
-        score -= (open_count - total_milestones // 2) * 5
-    if days_since_update > 7:
-        score -= 10
-    bug_count = sum(1 for i in issues if i.category == "Bug")
-    if bug_count > 2:
-        score -= 10
-    score = max(0, min(100, score))
-
-    if score >= 75:
-        grade = "Healthy"
-    elif score >= 45:
-        grade = "At Risk"
-    else:
-        grade = "Critical"
-
-    flags = []
-    if blocked_count > 0:
-        flags.append(f"{blocked_count} milestone{'s' if blocked_count > 1 else ''} blocked")
-    if days_since_update > 7:
-        flags.append(f"No update for {days_since_update} days")
-    if bug_count > 2:
-        flags.append(f"{bug_count} open bugs")
-    if open_count > total_milestones // 2 and total_milestones > 0:
-        flags.append(f"{open_count} milestones still open")
-
-    reasoning = f"Project scored {score}/100 based on {total_milestones} milestones and {len(issues)} open issues. "
-    if flags:
-        reasoning += f"Key concerns: {', '.join(flags)}."
-    else:
-        reasoning += "No major risks detected."
+        pass
 
     return {
         "score": score,
         "grade": grade,
         "reasoning": reasoning,
         "flags": flags,
-        "error": "⚠️ AI unavailable — using local calculation."
+        "error": None,
     }
 
 
@@ -361,9 +331,75 @@ Return ONLY valid JSON:
         }
 
 
+def _deterministic_query_projects(question: str, projects: list, milestones: list,
+                                   issues: list, updates: list) -> str:
+    """Deterministic, factual database answer fallback when LLM is unavailable or fails."""
+    q_lower = question.lower().strip()
+
+    # 1. Blocked projects or milestones
+    if "blocked" in q_lower:
+        blocked_items = []
+        for p in projects:
+            p_ms = [m for m in milestones if m.project_id == p.id and m.status == "Blocked"]
+            if p.overall_status == "Blocked" or p_ms:
+                ms_names = [f"'{m.title}'" for m in p_ms]
+                ms_str = f" ({', '.join(ms_names)})" if ms_names else ""
+                blocked_items.append(f"**{p.name}**{ms_str}")
+        if blocked_items:
+            return f"The following project(s) have blocked status or deliverables: {'; '.join(blocked_items)}."
+        return "No projects currently have blocked milestones or blocked status."
+
+    # 2. Risk / At Risk
+    if "risk" in q_lower:
+        at_risk = [p.name for p in projects if p.overall_status in ["At Risk", "Critical"]]
+        if at_risk:
+            return f"Projects currently flagged as At Risk: **{', '.join(at_risk)}**."
+        return "No projects are currently flagged as At Risk."
+
+    # 3. Ownership / Who owns
+    if "own" in q_lower or "owner" in q_lower:
+        matched = []
+        for p in projects:
+            p_name_clean = p.name.lower()
+            words = [w for w in p_name_clean.split() if len(w) > 3]
+            if p_name_clean in q_lower or any(w in q_lower for w in words):
+                owners_str = ", ".join(p.owners) if p.owners else "Unassigned"
+                matched.append(f"**{p.name}** is owned by {owners_str}.")
+        if matched:
+            return " ".join(matched)
+
+        all_owners = []
+        for p in projects:
+            owners_str = ", ".join(p.owners) if p.owners else "Unassigned"
+            all_owners.append(f"**{p.name}**: {owners_str}")
+        return "Project ownership: " + " | ".join(all_owners)
+
+    # 4. Open Bugs / Issues
+    if "bug" in q_lower or "issue" in q_lower:
+        issue_items = []
+        for p in projects:
+            p_issues = [i for i in issues if i.project_id == p.id]
+            if p_issues:
+                iss_descs = [f"'{getattr(i, 'title', 'Issue')}' ({getattr(i, 'severity', 'Medium')})" for i in p_issues]
+                issue_items.append(f"**{p.name}**: {', '.join(iss_descs)}")
+        if issue_items:
+            return "Open issues & bugs in portfolio: " + " | ".join(issue_items)
+        return "No open bugs or issues found in the portfolio."
+
+    # 5. Default portfolio summary
+    summary_parts = []
+    for p in projects:
+        p_ms = [m for m in milestones if m.project_id == p.id]
+        done = sum(1 for m in p_ms if m.status == "Done")
+        total = len(p_ms)
+        summary_parts.append(f"**{p.name}** ({p.overall_status}, {done}/{total} milestones completed)")
+
+    return f"Portfolio Database Overview: {'; '.join(summary_parts)}."
+
+
 def query_projects(question: str, projects: list, milestones: list, 
                    issues: list, updates: list) -> str:
-    """Query the full project dataset in natural language."""
+    """Query the full project dataset in natural language with AI and deterministic fallback."""
     context_parts = []
     for p in projects:
         p_milestones = [m for m in milestones if m.project_id == p.id]
@@ -401,9 +437,9 @@ Answer:"""
     
     try:
         api_key = _get_api_key()
-        if not api_key:
-            return "⚠️ AI query requires GROQ_API_KEY to be configured."
+        if api_key:
+            return _call_groq_api([{"role": "user", "content": prompt}], temperature=0.3, max_tokens=500).strip()
+    except Exception:
+        pass
 
-        return _call_groq_api([{"role": "user", "content": prompt}], temperature=0.3, max_tokens=500).strip()
-    except Exception as e:
-        return f"⚠️ Query failed: {str(e)[:100]}"
+    return _deterministic_query_projects(question, projects, milestones, issues, updates)

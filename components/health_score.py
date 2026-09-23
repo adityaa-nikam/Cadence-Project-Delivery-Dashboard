@@ -3,12 +3,13 @@
 import streamlit as st
 
 
-def render_health_score(health: dict) -> None:
+def render_health_score(health: dict, project_status: str | None = None) -> None:
     """
     Display a modern visual health score widget using HTML + Streamlit.
     
     Args:
         health: Dict with keys: score, grade, reasoning, flags, error
+        project_status: Optional overall project delivery status string
     """
     if not health:
         return
@@ -35,6 +36,8 @@ def render_health_score(health: dict) -> None:
         border = "#FECACA"
         badge_bg = "#B91C1C"
     
+    status_context = f"Target Delivery Status: <strong>{project_status}</strong> &nbsp;•&nbsp; " if project_status else ""
+
     # Main health score card
     st.markdown(f"""
     <div style="background:{bg}; border:1px solid {border}; border-radius:16px; padding:20px 24px; margin-bottom:16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);">
@@ -43,16 +46,19 @@ def render_health_score(health: dict) -> None:
                 <div style="font-size:42px; font-weight:800; color:{color}; line-height:1; font-family:'Plus Jakarta Sans', sans-serif;">
                     {score}
                 </div>
-                <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-top:4px;">Health Score</div>
+                <div style="font-size:10px; color:#64748B; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-top:4px;">Engine Score</div>
             </div>
             <div style="flex:1;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
                     <span style="background:{badge_bg}; color:#FFFFFF; font-size:12px; font-weight:700; padding:3px 12px; border-radius:999px; text-transform:uppercase; letter-spacing:0.05em;">
                         {grade}
                     </span>
-                    <span style="font-size:13px; color:#475569; font-weight:600;">AI Delivery Assessment</span>
+                    <span style="font-size:13px; color:#475569; font-weight:600;">{status_context}Deterministic AI Engine Assessment</span>
                 </div>
                 <div style="font-size:14px; color:#334155; line-height:1.5; font-weight:500;">{reasoning}</div>
+                <div style="font-size:11px; color:#64748B; font-style:italic; margin-top:6px;">
+                    💡 <em>Note: Project Target Status reflects manual delivery tracking, whereas Health Score is deterministically derived from active blockages, issue severity, and update recency.</em>
+                </div>
             </div>
         </div>
     </div>

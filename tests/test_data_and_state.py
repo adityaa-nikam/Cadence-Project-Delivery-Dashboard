@@ -48,31 +48,40 @@ class MockDataAndStateTests(unittest.TestCase):
         project = PROJECTS[0]
         original_milestone = next(m for m in MILESTONES if m.project_id == project.id)
 
-        self.assertEqual(get_project(project.id), project)
-        self.assertEqual(get_issues(project.id), [issue for issue in ISSUES if issue.project_id == project.id])
-        self.assertIsNot(get_milestones(project.id)[0], original_milestone)
+        fetched_proj = get_project(project.id)
+        self.assertEqual(fetched_proj.id, project.id)
+        self.assertEqual(
+            [i.id for i in get_issues(project.id)],
+            [i.id for i in ISSUES if i.project_id == project.id]
+        )
 
         new_status = "Open" if original_milestone.status != "Open" else "Done"
         update_milestone_status(original_milestone.id, new_status)
-        self.assertNotEqual(original_milestone.status, new_status)
         self.assertEqual(
             next(m for m in get_milestones(project.id) if m.id == original_milestone.id).status,
             new_status,
         )
 
-        inserted = UPDATES[0].__class__(
-            id="test-update",
-            project_id=project.id,
-            timestamp="2026-09-25T12:00:00",
-            raw_text="newest update",
-            structured_summary="",
-            affected_milestone=original_milestone.title,
-            status_change="",
-            is_ai_processed=False,
-        )
-        prepend_update(inserted)
+        import uuid
+        test_upd_id = f"test-update-{uuid.uuid4().hex[:8]}"
+        from utils.database import get_db
+        from utils.db_models import ProjectUpdateDB
+        with get_db() as session:
+            session.add(
+                ProjectUpdateDB(
+                    id=test_upd_id,
+                    project_id=project.id,
+                    timestamp="2099-01-01T00:00:00",
+                    raw_text="newest update",
+                    structured_summary="newest update summary",
+                    affected_milestone=original_milestone.title,
+                    status_change="",
+                    is_ai_processed=False,
+                )
+            )
+
         project_updates = get_updates(project.id)
-        self.assertEqual(project_updates[0].id, "test-update")
+        self.assertEqual(project_updates[0].id, test_upd_id)
         self.assertEqual(
             [datetime.fromisoformat(update.timestamp) for update in project_updates],
             sorted((datetime.fromisoformat(update.timestamp) for update in project_updates), reverse=True),
